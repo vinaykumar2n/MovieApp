@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./imgs/logo.png">
+    <title>Movie App</title>
+    <style>
+        body{
+            background-color: rgb(12, 18, 18);
+            color: white;
+
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            
+        }
+        #container{
+            position: relative;
+        }
+        nav{
+            background-color: #19242e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 30px 0px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        #searchbarandinput{
+            position: relative;
+            width: 26%;
+        }
+        #movieform{
+            display: flex;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            align-items: center;
+            position: relative;
+        }
+        #movieform>input{
+            width: 100%;
+            height: 35px;
+            padding: 5px;
+            padding-left: 30px;
+            border-radius: 6px;
+            margin-right: 0px;
+            border: 0;
+            color: white;
+            background-color: black;
+            outline: none;
+        }
+        /* #movieform>input:focus{
+            border: 0;
+        } */
+        #searchicon{
+            height: 18px;
+            width: 20px;
+            position: absolute;
+            right: 4px;
+        }
+        #moviedisplay{
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 40px;
+        }
+        #card{
+            border-radius: 15px;
+            position: relative;
+            background-color: #19242E;
+            color: white;
+
+        }
+        #imgdiv>img{
+            
+            width: 100%;
+            height: 320px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #imgdiv{
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #otherdiv{
+
+            padding: 10px;
+        }
+        #container>h1{
+            text-align: center;
+            margin-top: 10px;
+        }
+        #released{
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+        #recid{
+            border: 1px solid black;
+            text-align: center;
+            background-color: rgb(168, 168, 35);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            padding: 2px 20px 2px 20px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        #popandhome{
+            display: flex;
+            font-size: 20px;
+            justify-content: space-between;
+            align-items: center;
+            width: 15%;
+            margin-left: 350px;
+        }
+        #popandhome>div{
+            cursor: pointer;
+        }
+        #popandhome a{
+            text-decoration: none;
+            color: white;
+        }
+        #dropdown{
+            width: 93%;
+            max-height: 100vh;
+            position: absolute;
+            top: 55px;
+            overflow: hidden;
+            display: none;
+            background-color: #19242E;
+        }
+        #droplist{
+            list-style: none;
+            padding-left: 6px;
+            cursor: pointer;
+        }
+        #mainlogo{
+            display: flex;
+            align-items: center;
+        }
+        #mainlogo>img{
+            height: 30px;
+            width: 30px;
+            margin-right: 20px;
+        }
+        #nameli{
+            padding: 10px;
+        }
+        #nameli:hover{
+            background-color: #4a555f;
+        }
+        @media all and (min-width: 451px) and (max-width: 750px) {
+            #moviedisplay{
+                grid-template-columns: repeat(2,1fr);
+                gap: 30px;
+            }
+            #popandhome{
+                font-size: 16px;
+                width: 16%;
+                margin-left: 40px;
+                margin-right: 30px;
+            }
+            #searchbarandinput{
+                width: 45%;
+            }
+            nav{
+                padding: 0;
+            }
+        }
+        /* Small screens */
+        @media all and (min-width: 100px) and (max-width: 450px) {
+            #moviedisplay{
+                grid-template-columns: repeat(1,1fr);
+                gap: 30px;
+            }
+            #mainlogo{
+                font-size: 10px;
+            }
+            #mainlogo>img{
+                height: 20px;
+                width: 20px;
+                margin-right: 10px;
+            }
+            #popandhome{
+                font-size: 10px;
+                width: 16%;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+            #searchbarandinput{
+                width: 70%;
+            }
+            nav{
+                padding: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <nav>
+            <div id="mainlogo">
+                <img src="./imgs/logo.png" alt="">
+                <h1>MOVIES</h1>
+            </div>
+            <div id="popandhome">
+                <div id="homenav"><a href="./index.html">Home</a></div>
+                <div id="popularnav"><a href="./trending.html">Trending</a></div>
+            </div>
+            
+            
+            <div id="searchbarandinput">
+                <div id="movieform">
+                    <input type="text" oninput="debounce(main,700)" id="searchbox" placeholder="Seach movie">
+                    <img src="./imgs/search.png" alt="search" id="searchicon">
+                </div>
+                <div id="dropdown"></div>
+            </div>
+            
+        </nav>
+        
+        <div id="moviedisplay"></div>
+    </div>
+</body>
+</html>
+<script src="./hotstar3.js"></script>

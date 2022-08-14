@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./imgs/logo.png">
+    <title>Movie App</title>
+    <style>
+        body{
+            background-color: rgb(12, 18, 18);
+            color: white;
+
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            
+        }
+        #container{
+            position: relative;
+        }
+        nav{
+            background-color: #19242e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 23px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        #moviedisplay{
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 40px;
+        }
+        #card{
+            border-radius: 15px;
+            position: relative;
+            background-color: #19242E;
+            color: white;
+
+        }
+        #imgdiv>img{
+            
+            width: 100%;
+            height: 320px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #imgdiv{
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #otherdiv{
+
+            padding: 10px;
+        }
+        #container>h1{
+            text-align: center;
+            margin-top: 10px;
+        }
+        #released{
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+        #recid{
+            border: 1px solid black;
+            text-align: center;
+            background-color: rgb(168, 168, 35);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            padding: 2px 20px 2px 20px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        #popandhome{
+            display: flex;
+            font-size: 20px;
+            justify-content: space-between;
+            align-items: center;
+            width: 15%;
+            margin-right: 430px;
+        }
+        #popandhome>div{
+            cursor: pointer;
+        }
+        #popandhome a{
+            text-decoration: none;
+            color: white;
+        }
+        #dropdown{
+            width: 93%;
+            max-height: 100vh;
+            position: absolute;
+            top: 55px;
+            overflow: hidden;
+            display: none;
+            background-color: #19242E;
+        }
+        #droplist{
+            list-style: none;
+            padding-left: 6px;
+            cursor: pointer;
+        }
+        #mainlogo{
+            display: flex;
+            align-items: center;
+        }
+        #mainlogo>img{
+            height: 30px;
+            width: 30px;
+            margin-right: 20px;
+        }
+        #nameli{
+            padding: 10px;
+        }
+        #nameli:hover{
+            background-color: #4a555f;
+        }
+        @media all and (min-width: 451px) and (max-width: 750px) {
+            #moviedisplay{
+                grid-template-columns: repeat(2,1fr);
+                gap: 30px;
+            }
+            #popandhome{
+                font-size: 16px;
+                width: 30%;
+                margin-left: 40px;
+                margin-right: 30px;
+            }
+            #searchbarandinput{
+                width: 45%;
+            }
+        }
+        /* Small screens */
+        @media all and (min-width: 100px) and (max-width: 450px) {
+            #moviedisplay{
+                grid-template-columns: repeat(1,1fr);
+                gap: 30px;
+            }
+            #mainlogo{
+                font-size: 10px;
+            }
+            #mainlogo>img{
+                height: 20px;
+                width: 20px;
+                margin-right: 10px;
+            }
+            #popandhome{
+                font-size: 10px;
+                width: 30%;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+            #searchbarandinput{
+                width: 70%;
+            }
+            
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <nav>
+            <div id="mainlogo">
+                <img src="./imgs/logo.png" alt="">
+                <h1>MOVIES</h1>
+            </div>
+            <div id="popandhome">
+                <div id="homenav"><a href="./index.html">Home</a></div>
+                <div id="popularnav"><a href="./trending.html">Trending</a></div>
+            </div>
+            
+        </nav>
+        
+        <div id="moviedisplay"></div>
+    </div>
+</body>
+</html>
+<script>
+
+    let url=`https://api.themoviedb.org/3/movie/popular?api_key=ad90383510ca299b170423b671b9e506&language=en-US&page=1`
+    let moviedisplay_div = document.getElementById("moviedisplay");
+    let imgurl = "https://image.tmdb.org/t/p/w500";
+
+    function display(realdata) {
+    moviedisplay_div.innerHTML = null;
+    realdata.forEach(function (el, i) {
+        var box = document.createElement("div");
+        box.setAttribute("id", "card");
+
+        var imagediv = document.createElement("div");
+        imagediv.setAttribute("id", "imgdiv");
+        var img = document.createElement("img");
+        img.src = imgurl + el.poster_path;
+        imagediv.append(img);
+
+        var otherthanimg = document.createElement("div");
+        otherthanimg.setAttribute("id", "otherdiv");
+
+        var name = document.createElement("h2");
+        name.setAttribute("id", "namemovie");
+        name.innerText = el.original_title;
+
+        var released = document.createElement("h5");
+        released.setAttribute("id", "released");
+        released.innerText = el.release_date;
+
+        var ratings = document.createElement("p");
+        ratings.setAttribute("id", "ratings");
+        ratings.innerText = `Imdb Rating: ${el.vote_average}`;
+        var recdiv;
+        var rec;
+        if (Number(el.vote_average) > 8.5) {
+        recdiv = document.createElement("div");
+        recdiv.setAttribute("id", "recid");
+        recdiv.innerText = "Recommended";
+        otherthanimg.append(name, released, ratings, recdiv);
+        } else {
+        otherthanimg.append(name, released, ratings);
+        }
+
+        box.append(imagediv, otherthanimg);
+        document.getElementById("moviedisplay").append(box);
+    });
+    }
+    trendingData()
+    async function trendingData(){
+        try{
+            let res = await fetch(url);
+            let firstdata= await res.json();
+            console.log('firstdata:', firstdata)
+            display(firstdata.results)
+
+            
+        } catch(error){
+            console.log('error:', error)
+
+        }
+    }
+</script>
